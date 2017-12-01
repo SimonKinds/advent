@@ -24,3 +24,10 @@ class InverseCaptchaTestCase(unittest.TestCase):
     def test_from_string(self):
         self.assertEqual(inverse_captcha_from_string('1111'), 4)
         self.assertEqual(inverse_captcha_from_string('1234'), 0)
+
+    def test_step_half(self):
+        self.assertEqual(inverse_captcha([1, 2, 1, 2], 2), 6)
+        self.assertEqual(inverse_captcha([1, 2, 2, 1], 2), 0)
+        self.assertEqual(inverse_captcha_from_string('123425', 3), 4)
+        self.assertEqual(inverse_captcha_from_string('123123', 3), 12)
+        self.assertEqual(inverse_captcha_from_string('12131415', 4), 4)
