@@ -1,6 +1,6 @@
 import unittest
 
-from spiral_memory import spiral_memory_distance, build_layer
+from spiral_memory import spiral_memory_distance, spiral_memory_sum
 
 class SpiralMemoryTestCase(unittest.TestCase):
     def test_one_is_zero(self):
@@ -16,6 +16,10 @@ class SpiralMemoryTestCase(unittest.TestCase):
         self.assertEqual(spiral_memory_distance(12), 3)
         self.assertEqual(spiral_memory_distance(23), 2)
         self.assertEqual(spiral_memory_distance(1024), 31)
+    
+    def test_given_sum(self):
+        self.assertEqual(spiral_memory_sum(2), 4)
+        self.assertEqual(spiral_memory_sum(4), 5)
 
 if __name__ == '__main__':
     unittest.main()

@@ -47,3 +47,58 @@ def spiral_memory_distance(squares):
         grid.update(build_layer(mul, prev_value + 1, prev_pos[0] + 1, prev_pos[1]))
 
     return abs(grid[squares][0]) + abs(grid[squares][1])
+
+def get_sum_of_surrounding(x, y, grid):
+    val = 0
+    val += grid.get((x + 1, y), 0)
+    val += grid.get((x + 1, y + 1), 0)
+    val += grid.get((x, y + 1), 0)
+    val += grid.get((x - 1, y + 1), 0)
+    val += grid.get((x - 1, y), 0)
+    val += grid.get((x - 1, y - 1), 0)
+    val += grid.get((x, y - 1), 0)
+    val += grid.get((x + 1, y - 1), 0)
+    return val
+
+def build_layer_with_sum(grid, grid_multiplier, start_x, start_y):
+    grid[(start_x, start_y)] = get_sum_of_surrounding(start_x, start_y, grid)
+
+    x = start_x
+    y = start_y
+
+    # up
+    for _ in range(grid_multiplier - 2):
+        y -= 1
+
+        grid[(x, y)] = get_sum_of_surrounding(x, y, grid)
+
+    # left
+    for _ in range(grid_multiplier - 1):
+        x -= 1
+        grid[(x, y)] = get_sum_of_surrounding(x, y, grid)
+
+    # down
+    for _ in range(grid_multiplier - 1):
+        y += 1
+        grid[(x, y)] = get_sum_of_surrounding(x, y, grid)
+
+    # right
+    for _ in range(grid_multiplier - 1):
+        x += 1
+        grid[(x, y)] = get_sum_of_surrounding(x, y, grid)
+    
+    return (x, y)
+
+def spiral_memory_sum(max_sum):
+    grid = {}
+    grid[(0, 0)] = 1
+
+    mul = 3
+    x = 0
+    y = 0
+
+    while max(grid.values()) < max_sum:
+        x, y = build_layer_with_sum(grid, mul, x + 1, y)
+        mul += 2
+    
+    return sorted(filter(lambda x: x[1] > max_sum, grid.items()), key=lambda x: x[1])[0][1]
