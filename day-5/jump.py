@@ -1,4 +1,4 @@
-def jump(jump_values):
+def jump(jump_values,  value_updater=lambda x: x + 1):
 
     idx = jump_values[0]
     jump_values[0] += 1
@@ -8,10 +8,14 @@ def jump(jump_values):
         jump_count += 1
         prev_idx = idx
         idx += jump_values[idx]
-        jump_values[prev_idx] += 1
+        jump_values[prev_idx] = value_updater(jump_values[prev_idx])
 
     return jump_count
 
-def jump_from_file(filename):
+def jump_part_two(jump_values):
+    return jump(jump_values, value_updater=lambda x: x + 1 if x < 3 else x - 1)
+
+
+def jump_from_file(filename, fun=jump):
     with open(filename) as f:
-        return jump([int(x) for x in f.readlines()])
+        return fun([int(x) for x in f.readlines()])

@@ -1,6 +1,6 @@
 import unittest
 
-from jump import jump
+from jump import jump, jump_part_two
 
 class JumpTestCase(unittest.TestCase):
     def test_zero(self):
@@ -11,3 +11,6 @@ class JumpTestCase(unittest.TestCase):
     
     def test_given(self):
         self.assertEqual(jump([0, 3, 0, 1, -3]), 5)
+
+    def test_part_two(self):
+        self.assertEqual(jump_part_two([0, 3, 0, 1, -3]), 10)
